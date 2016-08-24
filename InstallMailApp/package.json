@@ -1,0 +1,15 @@
+{
+  "name": "InstallMailApp",
+  "version": "0.1.0",
+  "description": "Install Mail App build task",
+  "main": "InstallMailApp.js",
+  "scripts": {},
+  "author": "knom",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "q": "^1.4.1",
+	"soap": "^0.11.4",
+    "vsts-task-lib": "^0.9.5",
+    "xml2js": "^0.4.17"
+  }
+}
