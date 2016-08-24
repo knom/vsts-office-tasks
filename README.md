@@ -20,5 +20,18 @@ The extension installs the follow tasks:
         * Add a new endpoint by clicking on *Manage*.
         * Use https://mail.office365.com/ as the URL for Office 365.
 
+* ### Uninstall Office Mail Add-In
+    Remove an Office JS Mail Add-In from the server.
+    
+    #### Parameters: ####
+    * Path to application xml: 
+        * The path of the office manifest xml file. 
+        * It can contain variables such as $(Build.ArtifactStagingDirectory)\manifest.xml
+    * Exchange Endpoint:
+        * The URL and credential to Office 365 or Exchange. 
+        * Add a new endpoint by clicking on *Manage*.
+        * Use https://mail.office365.com/ as the URL for Office 365.
+
+		
 ## License ##
 Published under [Apache 2.0 License](https://github.com/knom/vsts-office-tasks/blob/master/LICENSE).
