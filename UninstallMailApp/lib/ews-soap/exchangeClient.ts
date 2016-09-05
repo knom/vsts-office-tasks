@@ -1,6 +1,7 @@
 let path = require("path");
 let xml2js = require("xml2js");
 let soap = require("soap");
+let enumerable = require("linq");
 
 export class EWSClient {
     private client: any = null;
@@ -57,10 +58,19 @@ export class EWSClient {
                 });
 
             parser.parseString(body, (err, result) => {
-                let responseCode = result["s:Body"]["InstallAppResponse"]["ResponseCode"]
+                let responseCode = result["s:Body"]["InstallAppResponse"]["ResponseCode"];
 
                 if (responseCode !== "NoError") {
-                    return callback(new Error(responseCode));
+					try{
+						let message = enumerable.from(result["s:Body"]["InstallAppResponse"]["MessageXml"]["t:Value"])
+										.where(function(i){return i["@"]["Name"] === "InnerErrorMessageText";})
+										.select(function(i){return i["_"];}).first();
+					}catch(e){
+						let message = "";
+					}
+					finally{		
+						return callback(new Error(responseCode + ": " + JSON.stringify(message)));
+					}
                 }
 
                 callback(null);

@@ -11,18 +11,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
+// tsc InstallApplication.ts -w
+// $env:INPUT_ewsConnectedServiceName = 'EP1'
+// $env:ENDPOINT_URL_EP1 = 'https://mail.office365.com/'
+// $env:ENDPOINT_AUTH_EP1 = '{ "parameters": { "username": "Some user", "password": "Some password" }, "scheme": "Some scheme" }'
+// $env:ENDPOINT_DATA_EP1 = '{ "Key1": "Value1", "Key2", "Value2" }'
+// 
+// $env:INPUT_appManifestXmlPath="C:\...\a.xml"
 // toolrunner help
 // https://github.com/Microsoft/vsts-task-lib/blob/be60205671545ebef47d3a40569519da9b4d34b0/node/docs/vsts-task-lib.md
 var q = require('q');
 var tl = require('vsts-task-lib/task');
 var fs = require('fs');
 var ews = require('./lib/ews-soap/exchangeClient');
+//var request = require('request');
+//require('request-debug')(request);
 function run() {
     return __awaiter(this, void 0, q.Promise, function* () {
         try {
-            var ewsConnectedServiceName = tl.getInput('ewsConnectedServiceName', true);
+            var ewsConnectedServiceName = tl.getInput('ewsConnectedServiceName');
             var appManifestXmlPath = tl.getPathInput('appManifestXmlPath', true, true);
-            // let appManifestXmlPath = "C:\\Work\\TFS\\VSTS Office Manifest Uploader\\InstallMailApp\\SampleManifest.xml";
             fs.readFile(appManifestXmlPath, 'utf8', function (err, data) {
                 if (err) {
                     throw err;

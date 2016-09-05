@@ -2,6 +2,7 @@
 var path = require("path");
 var xml2js = require("xml2js");
 var soap = require("soap");
+var enumerable = require("linq");
 var EWSClient = (function () {
     function EWSClient() {
         this.client = null;
@@ -49,7 +50,17 @@ var EWSClient = (function () {
             parser.parseString(body, function (err, result) {
                 var responseCode = result["s:Body"]["InstallAppResponse"]["ResponseCode"];
                 if (responseCode !== "NoError") {
-                    return callback(new Error(responseCode));
+                    try {
+                        var message = enumerable.from(result["s:Body"]["InstallAppResponse"]["MessageXml"]["t:Value"])
+                            .where(function (i) { return i["@"]["Name"] === "InnerErrorMessageText"; })
+                            .select(function (i) { return i["_"]; }).first();
+                    }
+                    catch (e) {
+                        var message = "";
+                    }
+                    finally {
+                        return callback(new Error(responseCode + ": " + JSON.stringify(message)));
+                    }
                 }
                 callback(null);
             });
