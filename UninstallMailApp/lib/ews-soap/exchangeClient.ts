@@ -2,6 +2,7 @@ let path = require("path");
 let xml2js = require("xml2js");
 let soap = require("soap");
 let enumerable = require("linq");
+import tl = require('vsts-task-lib/task');
 
 export class EWSClient {
     private client: any = null;
@@ -10,7 +11,11 @@ export class EWSClient {
         let endpoint = settings.url + "/EWS/Exchange.asmx";
         let url = path.join(__dirname, "Services.wsdl");
 
-        soap.createClient(url, {}, (err, client) => {
+		let options = {
+			escapeXML: false
+		};
+		
+        soap.createClient(url, options, (err, client) => {
             if (err) {
                 return callback(err);
             }
@@ -19,6 +24,22 @@ export class EWSClient {
             }
 
             this.client = client;
+			
+			this.client.addListener('request', function(xml){
+						tl.debug("---REQUEST---");
+						tl.debug(xml);
+						tl.debug("---END of REQUEST---");
+					});
+			this.client.addListener('response', function(a,b){
+						tl.debug("---RESPONSE---");
+						tl.debug("body: " + a);
+						tl.debug("response: " + JSON.stringify(b));
+						tl.debug("---END of RESPONSE---");
+					});
+			this.client.addListener('soapError', function(){
+						tl.warning("---SOAP ERROR---");
+						tl.warning("---END of SOAP ERROR---");
+					});
 
             if (settings.token) {
                 this.client.setSecurity(new soap.BearerSecurity(settings.token));
@@ -37,17 +58,17 @@ export class EWSClient {
         }
 
         let soapRequest =
-            "<tns:InstallApp xmlns:tns='http://schemas.microsoft.com/exchange/services/2006/messages'>" +
-            "<tns:Manifest>" + manifest + "</tns:Manifest>" +
-            "</tns:InstallApp>";
+            //"<tns:InstallApp xmlns:tns='http://schemas.microsoft.com/exchange/services/2006/messages'>" +
+            "<Manifest>" + manifest + "</Manifest>"; //+
+            //"</tns:InstallApp>";
 
-        this.client.InstallApp(soapRequest, (err, result, body) => {
-            if (err) {
-                if (result.statusCode && (result.statusCode == 401 || result.statusCode == 403))
+        this.client.InstallApp(soapRequest, (httpError, result, rawBody) => {
+            if (httpError) {
+                if (httpError.response.statusCode && (httpError.response.statusCode == 401 || httpError.response.statusCode == 403))
                 {
-                    return callback("Unauthorized!");
+                    return callback(new Error(httpError.response.statusCode + ": Unauthorized!"));
                 }
-                return callback(err);
+                return callback(new Error(httpError));
             }
 
             let parser = new xml2js.Parser(
@@ -57,7 +78,7 @@ export class EWSClient {
                     "attrkey": "@"
                 });
 
-            parser.parseString(body, (err, result) => {
+            parser.parseString(rawBody, (err, result) => {
                 let responseCode = result["s:Body"]["InstallAppResponse"]["ResponseCode"];
 
                 if (responseCode !== "NoError") {
@@ -84,18 +105,17 @@ export class EWSClient {
         }
 
         let soapRequest =
-            "<m:UninstallApp xmlns:m='http://schemas.microsoft.com/exchange/services/2006/messages'>" +
-            "<m:ID>" + id + "</m:ID>" +
-            "</m:UninstallApp>";
+            //"<m:UninstallApp xmlns:m='http://schemas.microsoft.com/exchange/services/2006/messages'>" +
+            "<ID>" + id + "</ID>"; // +
+            //"</m:UninstallApp>";
 
-        this.client.UninstallApp(soapRequest, (err, result, body) => {
-            if (err) {
-                if (result.statusCode && (result.statusCode == 401 || result.statusCode == 403))
+        this.client.UninstallApp(soapRequest, (httpError, result, rawBody) => {
+            if (httpError) {
+                if (httpError.response.statusCode && (httpError.response.statusCode == 401 || httpError.response.statusCode == 403))
                 {
-                    return callback("Unauthorized!");
+                    return callback(new Error(httpError.response.statusCode + ": Unauthorized!"));
                 }
-
-                return callback(err);
+                return callback(new Error(httpError));
             }
 
             let parser = new xml2js.Parser(
@@ -105,15 +125,24 @@ export class EWSClient {
                     "attrkey": "@"
                 });
 
-            parser.parseString(body, (err, result) => {
-                let responseCode = result["s:Body"]["UninstallAppResponse"]["ResponseCode"]
+            parser.parseString(rawBody, (err, result) => {
+                let responseCode = result["s:Body"]["UninstallAppResponse"]["ResponseCode"];
 
                 if (responseCode !== "NoError") {
-                    return callback(new Error(responseCode));
+                    try{
+						let message = enumerable.from(result["s:Body"]["UninstallAppResponse"]["MessageXml"]["t:Value"])
+										.where(function(i){return i["@"]["Name"] === "InnerErrorMessageText";})
+										.select(function(i){return i["_"];}).first();
+					}catch(e){
+						let message = "";
+					}
+					finally{		
+						return callback(new Error(responseCode + ": " + JSON.stringify(message)));
+					}
                 }
 
                 callback(null);
             });
         });
     };
-}
+}	

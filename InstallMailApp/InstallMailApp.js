@@ -24,8 +24,6 @@ var q = require('q');
 var tl = require('vsts-task-lib/task');
 var fs = require('fs');
 var ews = require('./lib/ews-soap/exchangeClient');
-//var request = require('request');
-//require('request-debug')(request);
 function run() {
     return __awaiter(this, void 0, q.Promise, function* () {
         try {
@@ -35,6 +33,12 @@ function run() {
                 if (err) {
                     throw err;
                 }
+                var request = require('request');
+                require('request-debug')(request, function (type, data, request) {
+                    tl.debug("---REQUEST-DEBUG " + type + "---");
+                    tl.debug(JSON.stringify(data));
+                    tl.debug("---END of REQUEST-DEBUG " + type + "---");
+                });
                 var manifest = new Buffer(data).toString("base64");
                 tl.debug("manifest (base64): " + manifest);
                 var serverUrl = tl.getEndpointUrl(ewsConnectedServiceName, true);
@@ -50,7 +54,7 @@ function run() {
                     tl.debug("Calling InstallApp SOAP request");
                     client.installApp(manifest, function (err) {
                         if (err) {
-                            throw err;
+                            tl.setResult(tl.TaskResult.Failed, err);
                         }
                         else {
                             tl.debug("Success.");

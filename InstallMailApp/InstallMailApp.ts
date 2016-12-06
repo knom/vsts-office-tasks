@@ -21,9 +21,6 @@ import path = require('path');
 import fs = require('fs');
 import ews = require('./lib/ews-soap/exchangeClient');
 
-//var request = require('request');
-//require('request-debug')(request);
-
 async function run() : q.Promise<void> {
     try {
 		var ewsConnectedServiceName = tl.getInput('ewsConnectedServiceName');
@@ -34,13 +31,20 @@ async function run() : q.Promise<void> {
 			if (err) {
 				throw err;
 			}
+			
+			var request = require('request');
+			require('request-debug')(request, function(type, data, request) {
+				tl.debug("---REQUEST-DEBUG " + type + "---");
+				tl.debug(JSON.stringify(data));
+				tl.debug("---END of REQUEST-DEBUG " + type + "---");
+			});
 
 			let manifest = new Buffer(data).toString("base64");
 
 			tl.debug("manifest (base64): " + manifest);
 			
 			let serverUrl = tl.getEndpointUrl(ewsConnectedServiceName, true);
-			
+						
             var ewsAuth = tl.getEndpointAuthorization(ewsConnectedServiceName, true);
             
 			let userName = ewsAuth['parameters']['username'];
@@ -48,6 +52,7 @@ async function run() : q.Promise<void> {
 			
 			tl.debug("Initializing EWS client");
 			let client = new ews.EWSClient();
+						
 			client.initialize({ url: serverUrl, username: userName, password: password },
 				(err: any) => {
 					if (err){
@@ -57,7 +62,7 @@ async function run() : q.Promise<void> {
 					tl.debug("Calling InstallApp SOAP request");
 					client.installApp(manifest, (err: any) => {
 						if (err) {
-							throw err;
+							tl.setResult(tl.TaskResult.Failed, err);
 						}
 						else {
 							tl.debug("Success.");

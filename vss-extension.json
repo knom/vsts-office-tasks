@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "office-mailapps-task",
     "name": "Office Outlook Add-In Build/RM Tasks",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "publisher": "knom",
     "targets": [
         {

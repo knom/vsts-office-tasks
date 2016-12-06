@@ -37,7 +37,7 @@
   ],
   "execution": {
     "Node": {
-      "target": "InstallApplication.js",
+      "target": "InstallMailApp.js",
       "argumentFormat": ""
     }
   }

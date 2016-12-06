@@ -9,7 +9,8 @@
   "dependencies": {
     "linq": "^3.0.5",
     "q": "^1.4.1",
-    "soap": "^0.11.4",
+	"request-debug":"^0.2.0",
+    "soap": "^0.18.0",
     "vsts-task-lib": "^0.9.5",
     "xml2js": "^0.4.17"
   }
