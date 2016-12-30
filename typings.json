@@ -1,0 +1,9 @@
+{
+  "globalDependencies": {
+    "node": "registry:dt/node#6.0.0+20161220160159"
+  },
+  "dependencies": {
+    "q": "registry:dt/q#0.0.0+20161119044246",
+    "xml2js": "registry:dt/xml2js#0.0.0+20161130184909"
+  }
+}

@@ -21,7 +21,7 @@ import path = require('path');
 import fs = require('fs');
 import ews = require('./lib/ews-soap/exchangeClient');
 
-async function run() : q.Promise<void> {
+function run() {
     try {
 		var ewsConnectedServiceName = tl.getInput('ewsConnectedServiceName');
 		
@@ -33,7 +33,7 @@ async function run() : q.Promise<void> {
 			}
 			
 			var request = require('request');
-			require('request-debug')(request, function(type, data, request) {
+			require('request-debug')(request, function(type:any, data:any, request:any) {
 				tl.debug("---REQUEST-DEBUG " + type + "---");
 				tl.debug(JSON.stringify(data));
 				tl.debug("---END of REQUEST-DEBUG " + type + "---");

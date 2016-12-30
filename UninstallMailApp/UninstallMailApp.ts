@@ -21,7 +21,7 @@ import fs = require('fs');
 import xml2js = require('xml2js');
 import ews = require('./lib/ews-soap/exchangeClient');
 
-async function run() : q.Promise<void> {
+function run() {
     try {
 		var ewsConnectedServiceName = tl.getInput('ewsConnectedServiceName', true);
 		
@@ -33,7 +33,7 @@ async function run() : q.Promise<void> {
 			}
 			
 			var request = require('request');
-			require('request-debug')(request, function(type, data, request) {
+			require('request-debug')(request, function(type:any, data:any, request:any) {
 				tl.debug("---REQUEST-DEBUG " + type + "---");
 				tl.debug(JSON.stringify(data));
 				tl.debug("---END of REQUEST-DEBUG " + type + "---");
@@ -46,7 +46,7 @@ async function run() : q.Promise<void> {
                 "attrkey": "@"
             });
 
-			parser.parseString(data, (err, result) => {
+			parser.parseString(data, (err:any, result:any) => {
 				let appId = result["Id"];
 
 				tl.debug("app id:" + appId);

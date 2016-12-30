@@ -1,4 +1,9 @@
 *.vsix
+typings/
+.taskkey
+
+InstallMailApp/InstallMailApp.js
+UninstallMailApp/UninstallMailApp.js
 
 # Logs
 logs
