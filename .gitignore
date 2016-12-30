@@ -1,7 +1,9 @@
+package/
 *.vsix
 typings/
 .taskkey
 
+**/exchangeClient.js
 InstallMailApp/InstallMailApp.js
 UninstallMailApp/UninstallMailApp.js
 

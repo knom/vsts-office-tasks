@@ -1,6 +1,6 @@
 {
   "name": "VSTS Outlook Build Tasks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "VSTS Outlook Build / RM Tasks",
   "author": "knom",
   "license": "Apache-2.0",
