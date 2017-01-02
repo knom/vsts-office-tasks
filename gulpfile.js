@@ -4,8 +4,20 @@ var del = require("del");
 var typescript = require("gulp-typescript");
 var merge = require('merge-stream');
 var path = require('path')
+var glob = require('glob')
 
 gulp.task('default', ['build']);
+
+gulp.task('clean', function (cb) {
+    return glob('./**/*.ts', function (err, files) {
+		var generatedFiles = files.map(function (file) {
+		  return file.replace(/.ts$/, '.js*');
+		});
+
+		del(generatedFiles, cb);
+	});
+});
+
 
 gulp.task('build', ['build:InstallMailApp','build:UninstallMailApp']);
 
@@ -50,7 +62,8 @@ gulp.task('package:copy', ['package:clean'], function () {
                 'docs/**/*', 
 				'**/*.xsd', '**/*.wsdl',
                 './InstallMailApp/**/*.js', './InstallMailApp/package.json', './InstallMailApp/task.json', './InstallMailApp/icon.png',
-                './UninstallMailApp/**/*.js', './UninstallMailApp/package.json', './UninstallMailApp/task.json', './UninstallMailApp/icon.png'],
+                './UninstallMailApp/**/*.js', './UninstallMailApp/package.json', './UninstallMailApp/task.json', './UninstallMailApp/icon.png',
+				"!**/node_modules/**/*",],
                  {base: "."})
         .pipe(gulp.dest("./package"));
 

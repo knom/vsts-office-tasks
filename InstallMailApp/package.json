@@ -1,0 +1,16 @@
+{
+  "name": "VSTSOutlookBuildTasks",
+  "version": "0.1.1",
+  "description": "VSTS Outlook Build / RM Tasks",
+  "author": "knom",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "linq": "^3.0.5",
+    "request-debug": "^0.2.0",
+    "q": "^1.4.1",
+    "soap": "^0.18.0",
+    "vsts-task-lib": "^0.9.5",
+    "xml2js": "^0.4.17"
+  },
+  "scripts": {}
+}
