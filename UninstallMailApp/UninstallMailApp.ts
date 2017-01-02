@@ -13,6 +13,7 @@
 
 // toolrunner help
 // https://github.com/Microsoft/vsts-task-lib/blob/be60205671545ebef47d3a40569519da9b4d34b0/node/docs/vsts-task-lib.md
+
 import q = require('q');
 import tl = require('vsts-task-lib/task');
 import trm = require('vsts-task-lib/toolrunner');
@@ -53,7 +54,12 @@ function run() {
 				
 				let serverUrl = tl.getEndpointUrl(ewsConnectedServiceName, true);
 				
-				var ewsAuth = tl.getEndpointAuthorization(ewsConnectedServiceName, true);
+				let ewsAuth = tl.getEndpointAuthorization(ewsConnectedServiceName, true);
+				
+				if (!serverUrl || !ewsAuth)
+				{
+					throw {message:"Endpoint is not set!"};
+				}
 				
 				let userName = ewsAuth['parameters']['username'];
 				let password = ewsAuth['parameters']['password'];

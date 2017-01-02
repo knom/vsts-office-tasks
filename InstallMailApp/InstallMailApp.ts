@@ -45,7 +45,12 @@ function run() {
 			
 			let serverUrl = tl.getEndpointUrl(ewsConnectedServiceName, true);
 						
-            var ewsAuth = tl.getEndpointAuthorization(ewsConnectedServiceName, true);
+            let ewsAuth = tl.getEndpointAuthorization(ewsConnectedServiceName, true);
+			
+			if (!serverUrl || !ewsAuth)
+			{
+				throw {message:"Endpoint is not set!"};
+			}
             
 			let userName = ewsAuth['parameters']['username'];
 			let password = ewsAuth['parameters']['password'];
