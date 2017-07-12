@@ -1,6 +1,10 @@
 # Office Mail-Addins VSTS Build/Release Task #
 Install and uninstall your mail-addin to Office365 and Exchange.
 
+## Supported Platforms ##
+* Visual Studio Team Services
+* Team Foundation Server 2015 Update 3 and higher ([How to install extensions in TFS](https://www.visualstudio.com/en-us/docs/marketplace/get-tfs-extensions))
+
 ## Usage ##
 The extension installs the follow tasks:
 
