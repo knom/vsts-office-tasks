@@ -1,4 +1,4 @@
-# Office Mail-Addins VSTS Build/Release Task #
+# Office Mail-Addins VSTS Build/Release Task # 
 Install and uninstall your mail-addin to Office365 and Exchange.
 
 ## Supported Platforms ##
