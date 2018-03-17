@@ -4,35 +4,31 @@
     "name": "Office Outlook Add-In Build/RM Tasks",
     "version": "0.1.5",
     "publisher": "knom",
-    "targets": [
-        {
-            "id": "Microsoft.VisualStudio.Services"
-        }
-    ],    
+    "targets": [{
+        "id": "Microsoft.VisualStudio.Services"
+    }],
     "description": "A set of tasks for installing Office Outlook Add-Ins to Exchange and Office365.",
     "categories": [
         "Build and release"
     ],
-	"public": true,
-	"tags":[
-		"Office", "MailApp", "Outlook", "Exchange", "EWS"
-	],
+    "public": true,
+    "tags": [
+        "Office", "MailApp", "Outlook", "Exchange", "EWS"
+    ],
     "icons": {
-        "default": "extension-icon.png"        
+        "default": "extension-icon.png"
     },
-    "files": [
-        {
+    "files": [{
             "path": "InstallMailApp"
         },
-		{
+        {
             "path": "UninstallMailApp"
         },
-		{
+        {
             "path": "node_modules"
         }
     ],
-	"screenshots": [
-        {
+    "screenshots": [{
             "path": "docs/addtask.png"
         },
         {
@@ -47,7 +43,7 @@
             "path": "LICENSE"
         }
     },
-	"links": {
+    "links": {
         "home": {
             "uri": "https://github.com/knom/vsts-office-tasks"
         },
@@ -67,12 +63,15 @@
             "uri": "https://github.com/knom/vsts-office-tasks/issues"
         }
     },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/knom/vsts-office-tasks/"
+    },
     "branding": {
         "color": "rgb(0,111,196)",
         "theme": "dark"
     },
-    "contributions": [
-        {
+    "contributions": [{
             "id": "InstallMailApp",
             "type": "ms.vss-distributed-task.task",
             "targets": [
@@ -82,7 +81,7 @@
                 "name": "InstallMailApp"
             }
         },
-		{
+        {
             "id": "UninstallMailApp",
             "type": "ms.vss-distributed-task.task",
             "targets": [
