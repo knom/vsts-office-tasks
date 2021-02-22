@@ -46,7 +46,7 @@ gulp.task('watch:UninstallMailApp', gulp.series('build:UninstallMailApp'), funct
 gulp.task('watch', gulp.series('watch:InstallMailApp','watch:UninstallMailApp'));
 
 gulp.task('package:clean', function () {
-    return del(gulp.series('package/*/**'));
+    return del(['package/*/**']);
 });
 
 gulp.task('package:copy', gulp.series('package:clean'), function () {
