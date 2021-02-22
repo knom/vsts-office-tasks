@@ -7,8 +7,6 @@ var merge = require('merge-stream');
 var path = require('path')
 var glob = require('glob')
 
-gulp.task('default', ['build']);
-
 gulp.task('clean', function (cb) {
     return glob('./**/*.ts', function (err, files) {
 		var generatedFiles = files.map(function (file) {
@@ -18,9 +16,6 @@ gulp.task('clean', function (cb) {
 		del(generatedFiles, cb);
 	});
 });
-
-
-gulp.task('build', ['build:InstallMailApp','build:UninstallMailApp']);
 
 gulp.task('build:InstallMailApp', function () {
     var tsProject = typescript.createProject('./InstallMailApp/tsconfig.json');
@@ -40,24 +35,21 @@ gulp.task('build:UninstallMailApp', function () {
 		}));
 });
 
-gulp.task('watch', ['watch:InstallMailApp','watch:UninstallMailApp']);
-
-gulp.task('watch:InstallMailApp', ['build:InstallMailApp'], function () {
-    gulp.watch('./InstallMailApp/**/*.ts', ['build:InstallMailApp']);
+gulp.task('watch:InstallMailApp', gulp.series('build:InstallMailApp'), function () {
+    gulp.watch('./InstallMailApp/**/*.ts', gulp.series('build:InstallMailApp'));
 });
 
-gulp.task('watch:UninstallMailApp', ['build:UninstallMailApp'], function () {
-    gulp.watch('./UninstallMailApp/**/*.ts', ['build:UninstallMailApp']);
+gulp.task('watch:UninstallMailApp', gulp.series('build:UninstallMailApp'), function () {
+    gulp.watch('./UninstallMailApp/**/*.ts', gulp.series('build:UninstallMailApp'));
 });
+
+gulp.task('watch', gulp.series('watch:InstallMailApp','watch:UninstallMailApp'));
 
 gulp.task('package:clean', function () {
-    return del(['package/*/**']);
+    return del(gulp.series('package/*/**'));
 });
 
-gulp.task('package', ['package:copy'], function () {	
-});
-
-gulp.task('package:copy', ['package:clean'], function () {
+gulp.task('package:copy', gulp.series('package:clean'), function () {
     var main = gulp.src([
                 './extension-icon*.png', 'LICENSE', 'README.md', 'vss-extension.json', 'package.json', 
                 'docs/**/*', 
@@ -70,3 +62,9 @@ gulp.task('package:copy', ['package:clean'], function () {
 
     return merge(main);	
 });
+
+gulp.task('package', gulp.series('package:copy'), function () {	
+});
+
+gulp.task('build', gulp.series('build:InstallMailApp','build:UninstallMailApp'));
+gulp.task('default', gulp.series('build'));
