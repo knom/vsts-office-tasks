@@ -4,7 +4,6 @@
     "description": "VSTS Outlook Build / RM Tasks",
     "author": "knom",
     "license": "Apache-2.0",
-    "dependencies": {},
     "devDependencies": {
         "del": "^2.2.2",
         "glob": "^7.1.1",
