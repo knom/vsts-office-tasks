@@ -11,7 +11,7 @@
         "gulp-typescript": "^6.0.0-alpha.1",
         "merge-stream": "^2.0.0",
         "typescript": "^4.2.4",
-        "yargs-parser": ">=5.0.0-security.0"
+        "yargs-parser": ">=5.0.1"
     },
     "scripts": {
         "postinstall": "cd InstallMailApp && npm install && cd ../UninstallMailApp && npm install"
