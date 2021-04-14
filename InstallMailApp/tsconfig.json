@@ -1,13 +1,22 @@
 {
     "compilerOptions": {
+        "target": "es5",
+        "lib": [
+            "es2015",
+            "es2015.iterable",
+            "dom"
+        ],
         "module": "commonjs",
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ]
     },
     "files": [
         "lib/ews-soap/exchangeClient.ts",
-		"InstallMailApp.ts",
+        "InstallMailApp.ts",
     ]
 }
