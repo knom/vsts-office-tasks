@@ -9,7 +9,7 @@
     }],
     "description": "A set of tasks for installing Office Outlook Add-Ins to Exchange and Office365.",
     "categories": [
-        "Build and release"
+        "Azure Pipelines"
     ],
     "public": true,
     "tags": [
