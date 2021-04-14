@@ -1,6 +1,5 @@
 package/
 *.vsix
-typings/
 .taskkey
 
 **/exchangeClient.js

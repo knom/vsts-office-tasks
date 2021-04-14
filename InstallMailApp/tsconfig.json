@@ -9,6 +9,5 @@
     "files": [
         "lib/ews-soap/exchangeClient.ts",
 		"InstallMailApp.ts",
-		"../typings/index.d.ts"
     ]
 }

@@ -12,5 +12,8 @@
     "soap": "^0.37.0",
     "xml2js": "^0.4.23"
   },
-  "scripts": {}
+  "scripts": {},
+  "devDependencies": {
+    "@types/q": "^1.5.4"
+  }
 }
