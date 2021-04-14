@@ -15,8 +15,8 @@
 // https://github.com/Microsoft/vsts-task-lib/blob/be60205671545ebef47d3a40569519da9b4d34b0/node/docs/vsts-task-lib.md
 
 import q = require('q');
-import tl = require('vsts-task-lib/task');
-import trm = require('vsts-task-lib/toolrunner');
+import tl = require('azure-pipelines-task-lib/task');
+import trm = require('azure-pipelines-task-lib/toolrunner');
 import path = require('path');
 import fs = require('fs');
 import xml2js = require('xml2js');
