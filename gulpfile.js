@@ -75,6 +75,7 @@ gulp.task(
         [
           "./extension-icon*.png",
           "LICENSE",
+          "PRIVACY.md",
           "README.md",
           "vss-extension.json",
           "package.json",

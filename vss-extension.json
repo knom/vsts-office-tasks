@@ -4,21 +4,28 @@
     "name": "Office Outlook Add-In Build/RM Tasks",
     "version": "1.2.1",
     "publisher": "knom",
-    "targets": [{
-        "id": "Microsoft.VisualStudio.Services"
-    }],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
     "description": "A set of tasks for installing Office Outlook Add-Ins to Exchange and Office365.",
     "categories": [
         "Azure Pipelines"
     ],
     "public": true,
     "tags": [
-        "Office", "MailApp", "Outlook", "Exchange", "EWS"
+        "Office",
+        "MailApp",
+        "Outlook",
+        "Exchange",
+        "EWS"
     ],
     "icons": {
         "default": "extension-icon.png"
     },
-    "files": [{
+    "files": [
+        {
             "path": "InstallMailApp"
         },
         {
@@ -28,7 +35,8 @@
             "path": "node_modules"
         }
     ],
-    "screenshots": [{
+    "screenshots": [
+        {
             "path": "docs/addtask.png"
         },
         {
@@ -61,6 +69,9 @@
         },
         "issues": {
             "uri": "https://github.com/knom/vsts-office-tasks/issues"
+        },
+        "privacypolicy": {
+            "uri": "https://github.com/knom/vsts-office-tasks/blob/master/PRIVACY.md"
         }
     },
     "repository": {
@@ -71,7 +82,8 @@
         "color": "rgb(0,111,196)",
         "theme": "dark"
     },
-    "contributions": [{
+    "contributions": [
+        {
             "id": "InstallMailApp",
             "type": "ms.vss-distributed-task.task",
             "targets": [
